@@ -1,0 +1,23 @@
+Feature: Support Submit 
+
+# /**Launch Hotels
+# *Click on “Support”
+# *Click “Site Feedback”
+# *Select any OVERALL rating
+# *Select any CONTENT rating
+# *Select any DESIGN rating
+# *Select any EASE OF USE rating
+# *Click on SUBMIT button
+# */Verify “THANK YOU FOR YOUR FEEDBACK.“ is displayed
+
+
+Scenario: Completing the feedback form
+    Given I am on hotels landing page
+    Then I click on “Support”
+    Then I click "Site Feedback”
+    Then I select any OVERALL rating
+    Then I select any CONTENT rating
+    Then I select any DESIGN rating
+    Then I select any EASE OF USE rating
+    Then I click on Submit button
+    Then I verify “THANK YOU FOR YOUR FEEDBACK.“ is displayed

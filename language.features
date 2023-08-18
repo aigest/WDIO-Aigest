@@ -1,0 +1,23 @@
+Features: Language
+
+# /**Go to Hotels.com
+# *Click on “English“ language
+# *Select “Español (Estados Unidos)” in Language dropdown
+# *Click on “Save“ button
+# *Verify “Español” is displayed
+# *Click on “Español“ language
+# *Select “English (United States)” in Language dropdown
+# *Click on “Guardar“ button
+# *Verify “English” is displayed
+# */
+
+Scenario: Verify language can be changed successfully
+    Given I am on hotels landing page
+    When I click on “English“ language
+    When I select “Español (Estados Unidos)” in Language dropdown
+    when I click on “Save“ button
+    Then I verify “Español” is displayed
+    Then I click on “Español“ language
+    Then I select “English (United States)” in Language dropdown
+    Then I click on “Guardar“ button
+    Then I verify “English” is displayed
