@@ -18,7 +18,15 @@ async clickContinueBtn(){
   async verifyErrorMessageIsDisplayed(){ 
 await $(errorMessageLocator).waitForDisplayed({timeout:3000});
      return await $(errorMessageLocator).isDisplayed();
-  }
+}
+oneKeyTermsLocator = '//a[contains(text(),"One")]'
+async oneKeyTerms(){
+    await $(this.oneKeyTermsLocator).click();     
+}
+privacyStatementLocator = '//a[contains(text(),"Privacy Statement")]'
+async privacyStatement(){
+    await $(this.privacyStatementLocator).click();     
+}
 // async verifyErrorMessageIsDisplayed(){
 //     const errorDisplayed = await $(this.errorMessageLocator).isDisplayed(); 
 //     expect(errorDisplayed,'Error message is not displayed').to.be.true; 
