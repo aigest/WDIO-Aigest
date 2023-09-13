@@ -173,6 +173,12 @@ async totalNumberOfTravelers() {
   return await $(this.toalCountLocator).getAttribute('value');
 }
 
+///////
+
+async propertyButton() {
+  await $(this.propertyButtonLocator).click();
+
+}
 
 
 
@@ -186,6 +192,129 @@ guardarBtnLocator = '//*[text()="Guardar"]';
 englishBtnLocator = '//*[@data-stid="button-type-picker-trigger"]';
 españolDropdwonLocator = 'value="es_US"';
 saveBtnLocator = '//*[@fdprocessedid="e2541l"]';
+
+
+//Filter 
+destinationTriggerLocator = '//button[@aria-label="Going to"]';
+searchLocator = '#destination_form_field';
+searchSuggestionsLocator = '//button[@data-stid="destination_form_field-result-item-button"]';
+allSeptemberDatesLocator = '//button[@class="uitk-date-picker-day"]';
+allOctoberDatesLocator = '//h2[text()="October 2023"]/following-sibling::table//button[not(@disabled)]';
+doneButtonLocator = '//button[@data-stid="apply-date-picker"]';
+searchButtonLocator = '#search_button';
+
+
+async clickDestination() {
+  await $(this.destinationTriggerLocator).waitForClickable();
+  await $(this.destinationTriggerLocator).click();
+
+}
+
+
+
+async searchManhattan() {
+
+  await $(this.searchLocator).setValue('Manhattan');
+  await browser.pause(2000);
+  await $('//*[@aria-label="Manhattan New York, New York, United States"]').click();
+
+}
+
+async selectManhattan() {
+
+  await browser.waitUntil(async () => {
+    const suggestions = await $$(this.searchSuggestionsLocator);
+    return suggestions.length > 0
+  },
+
+    { timeout: 3000, timeoutMsg: 'Autosuggestions are not displayed within 3-seconds' });
+
+  const allSuggestions = await $$(this.searchSuggestionsLocator);
+
+  for (const address of allSuggestions) {
+
+    const addressText = await address.getAttribute('aria-label');
+
+    if (addressText.startsWith('Manhattan, New York')) {
+
+      await address.click();
+
+      break;
+
+    }
+
+  }
+
+}
+
+async goToSeptember(monthYearSept) {
+
+
+
+  const nextArrowDisplayed = await $(this.nextArrowLocator).isDisplayed();
+
+
+  for (let i = 0; i < 12; i++) {
+
+    let septemberHeading = await $(this.septemberLocator).getText();
+
+    if (septemberHeading.localeCompare(monthYearSept) !== 0) {
+      if (nextArrowDisplayed) {
+        await $(this.nextArrowLocator).click();
+
+      } else {
+        await $(this.backArrowLocator).click();
+      }
+    } else {
+
+    } break;
+  }
+}
+
+async checkInDate() {
+
+
+  const allSeptemberDates = await $$(this.allSeptemberDatesLocator);
+  for (const septemberDateElement of allSeptemberDates) {
+    const dateValue = await septemberDateElement.getAttribute('data-day');
+    if (dateValue.localeCompare('29') === 0) {
+      await septemberDateElement.click();
+      break;
+    }
+
+  }
+
+}
+
+async checkOutDate() {
+  await $(this.nextArrowLocator).click();
+
+  const allOctoberDates = await $$(this.allOctoberDatesLocator);
+  for (const octoberDateElement of allOctoberDates) {
+    const dateValue = await octoberDateElement.getAttribute('data-day');
+    if (dateValue.localeCompare('16') === 0) {
+      await octoberDateElement.click();
+      break;
+    }
+
+  }
+
+}
+
+async checkInOutBtn() {
+  await $(this.doneButtonLocator).waitForClickable();
+  await $(this.doneButtonLocator).click();
+  await browser.pause(2000);
+
+}
+
+async searchButton() {
+  await $(this.searchButtonLocator).waitForClickable();
+  await $(this.searchButtonLocator).click();
+
+}
+
+
 
 }
   module.exports = homepage;
